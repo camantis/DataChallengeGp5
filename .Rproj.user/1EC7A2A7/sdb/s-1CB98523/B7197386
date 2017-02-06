@@ -1,0 +1,17 @@
+{
+    "contents" : "\nSfacts = read.csv(\"county_facts.csv\", sep=\",\", header=TRUE)\n\nEresults = read.csv(\"US_County_Level_Presidential_Results_12-16.csv\", sep=\",\", header=TRUE)\n\n#Subset Key for variables of interest\n# Trump voters were economically better off - Income\n# Registered voters with a college degree favored Clinton - Education\n# Less educated voters favored trump - Education \n# Trump voters were more likely to be white - Race\n# Hispanics/African Americans were more likely to vote for Clinton - Race\n# Suburban White Women can't stand Clinton - DesperateHouseWives\n# Married White Women favored clinton - DesperateHouseWives\n# Geographic regions: Northeast - CT, ME, MA, NH, RI, VT, NJ, NY, PA; \n# Midwest - IL, IN, MI, OH, WI, IA, KS, MN, MO, NE, ND, SD\n# South - DE, FL, GA, MD, NC, SC, VI, DC, WV, AL, KN, MS, TN, AR, LA, OK, TX; \n# West - AZ, CO, ID, MO, NV, NM, UT, WY, AK, CA, HI, OR, WA\n\nIncome = Sfacts[,names(Sfacts) %in% c(\"fips\",\"area_name\",\"state_abbreviation\",\"INC110213\",\n\"PVY020213\")]\n\n\nEducation = Sfacts[,names(Sfacts) %in% c(\"fips\",\"area_name\",\"state_abbreviation\",\"EDU635213\",\n                                         \"EDU685213\")]\n\nRace = Sfacts[,names(Sfacts) %in% c(\"fips\",\"area_name\",\"state_abbreviation\",\n\"RHI125214\",\"RHI225214\",\"RHI325214\",\"RHI425214\",\"RHI525214\",\"RHI625214\",\"RHI725214\",\"RHI825214\")]\n\nDesperateHouseWives = Sfacts[,names(Sfacts) %in% c(\"fips\",\"area_name\",\"state_abbreviation\",\"SEX255214\")]                                    \n#These two questions might be really difficult to answer with the info we have. \n# As far as I can tell, no info on marriage percentages, and surburban could be teased out but it isn't clear...\n\nNE =Sfacts[Sfacts$state_abbreviation %in% c(\"ME\",\"CT\",\"MA\",\"NH\",\"RI\",\"VT\",\"NJ\",\"NY\",\"PA\"),]\ndroplevels(NE$area_name)\ndroplevels(NE$state_abbreviation)\n                                    \nMW = Sfacts[Sfacts$state_abbreviation %in% c(\"IL\",\"IN\",\"MI\",\"OH\",\"WI\",\"IA\",\"KS\",\"MN\",\"MO\",\"NE\",\"ND\",\"SD\"),]                              \ndroplevels(MW$area_name)\ndroplevels(MW$state_abbreviation)\n\nSO = Sfacts[Sfacts$state_abbreviation %in% c(\"DE\",\"FL\",\"GA\",\"MD\",\"NC\",\"SC\",\"VA\",\"DC\",\"WV\",\"AL\",\n                                             \"KY\",\"MS\",\"TN\",\"AR\",\"LA\",\"OK\",\"TX\"),]\ndroplevels(SO$area_name)\ndroplevels(SO$state_abbreviation)\n\nWE = Sfacts[Sfacts$state_abbreviation %in% c(\"AZ\",\"CO\",\"ID\",\"MT\",\"NV\",\"NM\",\"UT\",\"WY\",\"AK\",\"CA\",\"HI\",\"OR\",\"WA\"),]\ndroplevels(WE$area_name)\ndroplevels(WE$state_abbreviation)\n",
+    "created" : 1486407626006.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1143573452",
+    "id" : "B7197386",
+    "lastKnownWriteTime" : 1486407730,
+    "path" : "~/Desktop/DataChallengeGp5/DataChallenge1.R",
+    "project_path" : "DataChallenge1.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
