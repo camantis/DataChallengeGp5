@@ -15,10 +15,12 @@ Eresults = read.csv("US_County_Level_Presidential_Results_12-16.csv", sep=",", h
 # Midwest - IL, IN, MI, OH, WI, IA, KS, MN, MO, NE, ND, SD
 # South - DE, FL, GA, MD, NC, SC, VI, DC, WV, AL, KN, MS, TN, AR, LA, OK, TX; 
 # West - AZ, CO, ID, MO, NV, NM, UT, WY, AK, CA, HI, OR, WA
+# Areas with low density were more likely to vote for trump-Bubble (population/land area)
+# Recent vets were more likely to vote for Clinton-vets
 
 Income = Sfacts[,names(Sfacts) %in% c("fips","area_name","state_abbreviation","INC110213",
 "PVY020213")]
-
+Income
 
 Education = Sfacts[,names(Sfacts) %in% c("fips","area_name","state_abbreviation","EDU635213",
                                          "EDU685213")]
@@ -46,3 +48,23 @@ droplevels(SO$state_abbreviation)
 WE = Sfacts[Sfacts$state_abbreviation %in% c("AZ","CO","ID","MT","NV","NM","UT","WY","AK","CA","HI","OR","WA"),]
 droplevels(WE$area_name)
 droplevels(WE$state_abbreviation)
+
+
+#Create a dataframe called "Bubble" that contains fips, area_name, state_abbreviation, land area, and population 
+Bubble<- Sfacts[,names(Sfacts) %in% c("fips","area_name","state_abbreviation","LND110210",
+                                      "POP060210")]
+#Create a new column called "density" that divides population per square mile by land area in square miles
+Bubble$density<-Bubble$POP060210/Bubble$LND110210
+
+#Need to figure out a good way to separate "low density" vs "high density"
+median(Bubble$density) #Could take median
+mean(Bubble$density) #Could take mean
+#Not too important as long as we can compare the two sides and how they voted.
+
+
+
+
+vet<-Sfacts[,names(Sfacts)%in% c("fips","area_name","state_abbreviation","VET605213")]
+vet
+
+#We need to merge these variables with the election results. Easy to do for some variables (like region) but for others?
