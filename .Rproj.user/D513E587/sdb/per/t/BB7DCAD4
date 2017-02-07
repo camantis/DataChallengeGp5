@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1486434185267.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "BB7DCAD4",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1486434185267,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "kc64wgy2lb",
+        "caption" : "NETotal",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=NETotal&cache_key=kc64wgy2lb",
+        "displayedObservations" : 217,
+        "environment" : "",
+        "object" : "NETotal",
+        "totalObservations" : 217,
+        "variables" : 62
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
