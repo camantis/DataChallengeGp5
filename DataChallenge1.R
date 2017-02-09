@@ -18,53 +18,58 @@ Eresults = read.csv("US_County_Level_Presidential_Results_12-16.csv", sep=",", h
 # Areas with low density were more likely to vote for trump-Bubble (population/land area)
 # Recent vets were more likely to vote for Clinton-vets
 
-Income = Sfacts[,names(Sfacts) %in% c("fips","area_name","state_abbreviation","INC110213",
+#Questions for Deb
+  #Making assumptions of what these things mean. Such as #"Better off" means income or house"
+  #How much resolution do we need to answer the question? Can we compare states that trump won or go down to counties where he won?
+  #Delete rows in Sfacts where state_abbreviation is null
+  #Can bring in new data using FIPS
+  #Look at census data
+
+
+
+#Median household income, percent below poverty, per capita money income
+camhsincome = Sfacts[,names(Sfacts) %in% c("fips","area_name"
+                                      ,"state_abbreviation",
+                                      "INC110213","INC910213",
 "PVY020213")]
-Income
 
-Education = Sfacts[,names(Sfacts) %in% c("fips","area_name","state_abbreviation","EDU635213",
-                                         "EDU685213")]
+camhsincome
 
-Race = Sfacts[,names(Sfacts) %in% c("fips","area_name","state_abbreviation",
-"RHI125214","RHI225214","RHI325214","RHI425214","RHI525214","RHI625214","RHI725214","RHI825214")]
-
-DesperateHouseWives = Sfacts[,names(Sfacts) %in% c("fips","area_name","state_abbreviation","SEX255214")]                                    
-#These two questions might be really difficult to answer with the info we have. 
-# As far as I can tell, no info on marriage percentages, and surburban could be teased out but it isn't clear...
-
-NE =Sfacts[Sfacts$state_abbreviation %in% c("ME","CT","MA","NH","RI","VT","NJ","NY","PA"),]
-droplevels(NE$area_name)
-droplevels(NE$state_abbreviation)
-                                    
-MW = Sfacts[Sfacts$state_abbreviation %in% c("IL","IN","MI","OH","WI","IA","KS","MN","MO","NE","ND","SD"),]                              
-droplevels(MW$area_name)
-droplevels(MW$state_abbreviation)
-
-SO = Sfacts[Sfacts$state_abbreviation %in% c("DE","FL","GA","MD","NC","SC","VA","DC","WV","AL",
-                                             "KY","MS","TN","AR","LA","OK","TX"),]
-droplevels(SO$area_name)
-droplevels(SO$state_abbreviation)
-
-WE = Sfacts[Sfacts$state_abbreviation %in% c("AZ","CO","ID","MT","NV","NM","UT","WY","AK","CA","HI","OR","WA"),]
-droplevels(WE$area_name)
-droplevels(WE$state_abbreviation)
+#Let's try and change these names
+colnames(camhsincome)<-c("fips","county","state","median household income","per capita money income","percent below
+                         poverty level")
 
 
-#Create a dataframe called "Bubble" that contains fips, area_name, state_abbreviation, land area, and population 
-Bubble<- Sfacts[,names(Sfacts) %in% c("fips","area_name","state_abbreviation","LND110210",
-                                      "POP060210")]
-#Create a new column called "density" that divides population per square mile by land area in square miles
-Bubble$density<-Bubble$POP060210/Bubble$LND110210
+#Let's remove all the total-state rows (i.e., rows where State is blank)
 
-#Need to figure out a good way to separate "low density" vs "high density"
-median(Bubble$density) #Could take median
-mean(Bubble$density) #Could take mean
-#Not too important as long as we can compare the two sides and how they voted.
+income <- camhsincome[!(camhsincome$state == ""), ] 
 
 
 
 
-vet<-Sfacts[,names(Sfacts)%in% c("fips","area_name","state_abbreviation","VET605213")]
-vet
+income
 
-#We need to merge these variables with the election results. Easy to do for some variables (like region) but for others?
+#Now we need to merge ze data with election results
+
+electdata = subset(Eresults, 
+                    select=c("FIPS","county_name","state_abbr","votes_dem_2016",
+                             "votes_gop_2016","per_dem_2016","per_gop_2016"))
+
+colnames(electdata) = c("fips","county","state","demvote","gopvote","percentdem","percgop")
+
+fulldata = merge(electdata,income) #electdata has two more observations than income
+
+fulldata #somehow it merges but now there are only 3110 observations...
+
+
+#Work on Income
+
+
+
+
+#Merging data sets
+#Create new variables
+#Presentation
+
+
+
